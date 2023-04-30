@@ -4,7 +4,7 @@
 ;@Ahk2Exe-SetVersion 0.0.0.1
 ;@Ahk2Exe-SetName SuperAgent
 ;@Ahk2Exe-SetMainIcon C:\Users\tmp217187\Downloads\superhero.ico
-checkDate()
+; checkDate()
 /*
 Made by: Hassan Sofian Abdelshakor Tawfik
 mail: hassansofean37@gmail.com
@@ -32,9 +32,6 @@ Gui,Add,Text, x230 y23 BackgroundTrans ca7a7a7,Hassan Sofian AbdElshakor
 Gui,Font,s10 norm,Segoe UI
 Gui,Add,tab3,h500 x1 y20 w500,Tools|Main||
 Gui,Font,s10 norm,Segoe UI
-; Gui,Font,s40 bold,Segoe UI
-; Gui, Add, Text, cEEF1F4 x200 y230 BackgroundTrans,%appName%
-; Gui,Font,s10 norm,Segoe UI
 gui,add,DropDownList,x70 y70 w95 vselectedItem gitem ,Ping|Tracert|FlushDNS|IP configration|nslookup
 Gui,Add,edit,vBox x175 y70 h25 w150 ,10.190.0.12
 gui,add,Button,y69 h27 x10 w50 grunCMD,Run
@@ -51,14 +48,13 @@ IP Address
 
 Computer Name : %A_ComputerName%
 )
-Gui,add,edit,x80 y65 ReadOnly h25 w175,%A_IPAddress1% , %A_IPAddress2%
+Gui,add,text,x80 y65 h25 w175,%A_IPAddress1% , %A_IPAddress2%
 gui,add,Button,grefresh y65 x265 h25,refresh
 gui,add,Button,ghide x10 y260 w70 h25,Hide
-; Gui,Font,s40 bold,Segoe UI
-; Gui, Add, Text, cEEF1F4 x200 y230 BackgroundTrans,%appName%
-; Gui,Font,s10 norm,Segoe UI
-; Gui, Add, Button, w70 h25 x410 y460, Contact
 Gui, Show,w500 h300, %appName%
+avayaExt()
+avayaNotePad()
+; answer() function should be last one to be called before return
 answer()
 Return
 ; ----------------------
@@ -112,9 +108,18 @@ avayaExt(){
     hParent := WinExist("ahk_exe onexcui.exe")
     Gui avayaExtWin:New,+AlwaysOnTop -Caption HWNDhChild
     Gui avayaExtWin: Margin, 0, 0
-    Gui, Add, Button,h20 x0 y0 gavayaExtBtn, %appName% is running 
+    Gui, Add, Button,h20 x0 y0 gavayaExtBtn, %appName%
     DllCall("SetParent", Ptr, hChild, Ptr, hParent)
     Gui avayaExtWin:Show, x100 y7
+}
+; notepad
+avayaNotePad(){
+    hParent := WinExist("ahk_exe onexcui.exe")
+    Gui avayaNote:New,+AlwaysOnTop -Caption HWNDhChild
+    Gui avayaNote: Margin, 0, 0
+    Gui, Add, text,h20 x0 y0 cRed,Break(15) after 1 m
+    DllCall("SetParent", Ptr, hChild, Ptr, hParent)
+    Gui avayaNote:Show, x185 y7
 }
 
 ; a function to answer calls
@@ -130,6 +135,7 @@ answer(){
             WinActivate, ahk_exe onexcui.exe
             ; }
             avayaExt()
+            avayaNotePad()
             Goto, ch1
         }Else{
             Goto, ch1
@@ -152,7 +158,7 @@ screenShot(){
     CaptureScreen("0,65,1319, 721",False,location,100) ; save to location
     ; CaptureScreen(,False,,100) ; save to clipboard
     Convert("screen.bmp","C:\Users\tmp217187\Music\IU\IU Capture.png")
-    TrayTip,Screenshot Saved, ScreenShot saved to %appName% location, 5
+    TrayTip,Screenshot Saved, ScreenShot saved to `n%appName% location, 5
 }
 
 ; --------------------------
@@ -239,6 +245,7 @@ ExitApp
 
 #Include, C:\Users\tmp217187\Desktop\Dev\#Include, Files\CaptureScreen.ahk
 #Include, C:\Users\tmp217187\Desktop\Dev\#Include, Files\Build_Components.ahk
+#Include, C:\Users\tmp217187\Desktop\Dev\components\showNotePad.ahk
 
 ; TODO
 ; start app at sys start
